@@ -67,22 +67,22 @@ public class Ventana extends JFrame implements ActionListener {
 		contentPane.add(postman);
 		
 		textField = new JTextField();
-		textField.setBounds(37, 181, 224, 20);
+		textField.setBounds(53, 181, 224, 20);
 		contentPane.add(textField);
 		textField.setColumns(10);
 		
 		JButton navegar = new JButton("NAVEGAR");
-		navegar.setBounds(325, 180, 89, 23);
+		navegar.setBounds(341, 180, 89, 23);
 		contentPane.add(navegar);
 		
 		JTextPane textPane = new JTextPane();
-		textPane.setBounds(58, 234, 336, 96);
+		textPane.setBounds(53, 228, 372, 136);
 		contentPane.add(textPane);
 		
 		JLabel lupa = new JLabel("");
 		ImageIcon imageIcon4 = new ImageIcon(new ImageIcon("img\\lupa.png").getImage().getScaledInstance(20,20,Image.SCALE_DEFAULT));
 		lupa.setIcon(imageIcon4);
-		lupa.setBounds(279, 184, 20, 20);
+		lupa.setBounds(295, 184, 20, 20);
 		contentPane.add(lupa);
 	}
 
