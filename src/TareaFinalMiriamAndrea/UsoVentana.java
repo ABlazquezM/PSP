@@ -2,8 +2,7 @@ package TareaFinalMiriamAndrea;
 
 import java.awt.EventQueue;
 
-
-public class UsoVentana  {
+public class UsoVentana {
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -17,6 +16,5 @@ public class UsoVentana  {
 			}
 		});
 	}
-
 
 }
