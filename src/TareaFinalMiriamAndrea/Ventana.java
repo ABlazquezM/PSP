@@ -1,14 +1,11 @@
 package TareaFinalMiriamAndrea;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.regex.Pattern;
-
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -40,7 +37,7 @@ public class Ventana extends JFrame implements ActionListener {
 	private JButton visualStudio;
 	private JButton navegar;
 	private JButton abrirArchivoVS;
-	
+
 	private JFileChooser fileChooser;
 
 	public Ventana() {
@@ -62,11 +59,11 @@ public class Ventana extends JFrame implements ActionListener {
 		for (String url : gestion.listaUrlsVisitadas) {
 			textPane.setText(textPane.getText() + url + "\n");
 		}
-		
+
 		// Inicializamos el JFileChooser
-        fileChooser = new JFileChooser();
-        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        fileChooser.setDialogTitle("Abrir archivo");
+		fileChooser = new JFileChooser();
+		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+		fileChooser.setDialogTitle("Abrir archivo");
 	}
 
 	private void inicializarComponentes() {
@@ -144,7 +141,7 @@ public class Ventana extends JFrame implements ActionListener {
 		lupa.setIcon(imageIcon4);
 		lupa.setBounds(295, 184, 20, 20);
 		contentPane.add(lupa);
-		
+
 		// Botón para abrir archivos con VisualStudio
 		abrirArchivoVS = new JButton("Abrir archivo con VS");
 		abrirArchivoVS.setBackground(new Color(255, 127, 80));
@@ -152,8 +149,7 @@ public class Ventana extends JFrame implements ActionListener {
 		abrirArchivoVS.setBounds(140, 386, 210, 23);
 		abrirArchivoVS.addActionListener(this); // Establecemos el listener para el botón
 		contentPane.add(abrirArchivoVS);
-		
-		
+
 	}
 
 	@Override
@@ -165,11 +161,9 @@ public class Ventana extends JFrame implements ActionListener {
 			// de notas.
 
 			try {
-				Process p = pb.start();
+				pb.start();
 				// Se intenta iniciar el proceso utilizando pb.start(). Esto ejecutará el
-				// comando configurado en ProcessBuilder. Si el proceso se inicia con éxito, se
-				// obtendrá una instancia de Process que puede usarse para interactuar con el
-				// proceso, aunque en este caso, no se hace nada con esta instancia.
+				// comando configurado en ProcessBuilder. Si el proceso se inicia con éxito.
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
@@ -213,34 +207,36 @@ public class Ventana extends JFrame implements ActionListener {
 						textPane.setText(textPane.getText() + storedUrl + "\n");
 					}
 				} else {
-					JOptionPane.showMessageDialog(null,"Debes introducir una URL válida");
+					JOptionPane.showMessageDialog(null, "Debes introducir una URL válida");
 					textField.setText("");
 				}
-				
+
 			}
 
 		}
-		
-		 if (e.getSource() == abrirArchivoVS) {
-	            // Abrimos el cuadro de diálogo de selección de archivos
-	            int resultado = fileChooser.showOpenDialog(this);
 
-	            // Si el usuario seleccionó un archivo
-	            if (resultado == JFileChooser.APPROVE_OPTION) {
-	                // Obtenemos el archivo seleccionado
-	                File archivoSeleccionado = fileChooser.getSelectedFile();
-	                String archivo = archivoSeleccionado.getAbsolutePath();
+		if (e.getSource() == abrirArchivoVS) {
+			// Abrimos el cuadro de diálogo de selección de archivos
+			int resultado = fileChooser.showOpenDialog(this);
 
-	    	        ProcessBuilder pb = new ProcessBuilder("C:\\Users\\AndreaBlazquezMartin\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe", archivo);
-	    	        try {
-	    	            pb.start();
-	    	        } catch (IOException e2) {
-	    	            e2.printStackTrace();
-	    	        }
-	               
-	            }
-	        }
-		
+			// Si el usuario seleccionó un archivo
+			if (resultado == JFileChooser.APPROVE_OPTION) {
+				// Obtenemos el archivo seleccionado
+				File archivoSeleccionado = fileChooser.getSelectedFile();
+				String archivo = archivoSeleccionado.getAbsolutePath();
+
+				ProcessBuilder pb = new ProcessBuilder(
+						"C:\\Users\\AndreaBlazquezMartin\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe",
+						archivo);
+				try {
+					pb.start();
+				} catch (IOException e2) {
+					e2.printStackTrace();
+				}
+
+			}
+		}
+
 	}
 
 	// Añadimos esto para poder acceder a los links pinchado sobre ellos
@@ -293,6 +289,5 @@ public class Ventana extends JFrame implements ActionListener {
 		}
 		return pos;
 	}
-	
 
 }

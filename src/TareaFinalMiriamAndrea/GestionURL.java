@@ -97,7 +97,5 @@ public class GestionURL {
 		}
 		return false; // La URL no está en el fichero
 	}
-	
-	
 
 }
