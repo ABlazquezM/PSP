@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 import java.util.regex.Pattern;
 
@@ -19,6 +20,7 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import java.awt.Color;
 
 public class Ventana extends JFrame implements ActionListener {
 
@@ -37,12 +39,16 @@ public class Ventana extends JFrame implements ActionListener {
 	private JButton postman;
 	private JButton visualStudio;
 	private JButton navegar;
+	private JButton abrirArchivoVS;
+	
+	private JFileChooser fileChooser;
 
 	public Ventana() {
 		setTitle("GESTION DE PROGRAMAS");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 500, 458);
+		setBounds(100, 100, 500, 508);
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(255, 228, 196));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
@@ -56,12 +62,14 @@ public class Ventana extends JFrame implements ActionListener {
 		for (String url : gestion.listaUrlsVisitadas) {
 			textPane.setText(textPane.getText() + url + "\n");
 		}
+		
+		// Inicializamos el JFileChooser
+        fileChooser = new JFileChooser();
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        fileChooser.setDialogTitle("Abrir archivo");
 	}
 
 	private void inicializarComponentes() {
-		JPanel panel = new JPanel();
-		panel.setBounds(186, 12, 10, 10);
-		contentPane.add(panel);
 
 		JLabel img2 = new JLabel("");
 		ImageIcon imageIcon = new ImageIcon(
@@ -85,16 +93,22 @@ public class Ventana extends JFrame implements ActionListener {
 		contentPane.add(img3);
 
 		visualStudio = new JButton("VisualStudio");
-		visualStudio.setBounds(73, 128, 89, 23);
+		visualStudio.setForeground(new Color(255, 248, 220));
+		visualStudio.setBackground(new Color(255, 127, 80));
+		visualStudio.setBounds(62, 128, 109, 23);
 		visualStudio.addActionListener(this);
 		contentPane.add(visualStudio);
 
 		notepad = new JButton("Notepad");
+		notepad.setBackground(new Color(255, 127, 80));
+		notepad.setForeground(new Color(255, 248, 220));
 		notepad.setBounds(201, 128, 89, 23);
 		notepad.addActionListener(this);
 		contentPane.add(notepad);
 
 		postman = new JButton("Postman");
+		postman.setForeground(new Color(255, 248, 220));
+		postman.setBackground(new Color(255, 127, 80));
 		postman.setBounds(325, 128, 89, 23);
 		postman.addActionListener(this);
 		contentPane.add(postman);
@@ -105,11 +119,14 @@ public class Ventana extends JFrame implements ActionListener {
 		textField.setColumns(10);
 
 		navegar = new JButton("NAVEGAR");
+		navegar.setForeground(new Color(255, 255, 255));
+		navegar.setBackground(new Color(100, 149, 237));
 		navegar.setBounds(341, 180, 89, 23);
 		navegar.addActionListener(this);
 		contentPane.add(navegar);
 
 		textPane = new JTextPane();
+		textPane.setBackground(new Color(255, 248, 220));
 		JScrollPane scrollPane = new JScrollPane(textPane);
 		scrollPane.setBounds(53, 228, 372, 136);
 		// Añadimos un MouseListener para poder escuchar desde el textPane el clic del
@@ -128,7 +145,13 @@ public class Ventana extends JFrame implements ActionListener {
 		lupa.setBounds(295, 184, 20, 20);
 		contentPane.add(lupa);
 		
-		
+		// Botón para abrir archivos con VisualStudio
+		abrirArchivoVS = new JButton("Abrir archivo con VS");
+		abrirArchivoVS.setBackground(new Color(255, 127, 80));
+		abrirArchivoVS.setForeground(new Color(255, 248, 220));
+		abrirArchivoVS.setBounds(140, 386, 210, 23);
+		abrirArchivoVS.addActionListener(this); // Establecemos el listener para el botón
+		contentPane.add(abrirArchivoVS);
 		
 		
 	}
@@ -197,6 +220,27 @@ public class Ventana extends JFrame implements ActionListener {
 			}
 
 		}
+		
+		 if (e.getSource() == abrirArchivoVS) {
+	            // Abrimos el cuadro de diálogo de selección de archivos
+	            int resultado = fileChooser.showOpenDialog(this);
+
+	            // Si el usuario seleccionó un archivo
+	            if (resultado == JFileChooser.APPROVE_OPTION) {
+	                // Obtenemos el archivo seleccionado
+	                File archivoSeleccionado = fileChooser.getSelectedFile();
+	                String archivo = archivoSeleccionado.getAbsolutePath();
+
+	    	        ProcessBuilder pb = new ProcessBuilder("C:\\Users\\AndreaBlazquezMartin\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe", archivo);
+	    	        try {
+	    	            pb.start();
+	    	        } catch (IOException e2) {
+	    	            e2.printStackTrace();
+	    	        }
+	               
+	            }
+	        }
+		
 	}
 
 	// Añadimos esto para poder acceder a los links pinchado sobre ellos
@@ -249,4 +293,6 @@ public class Ventana extends JFrame implements ActionListener {
 		}
 		return pos;
 	}
+	
+
 }
