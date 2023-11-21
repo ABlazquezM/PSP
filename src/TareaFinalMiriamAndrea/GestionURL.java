@@ -20,6 +20,13 @@ public class GestionURL {
 	// Creamos un método para cargar las URL del archivo y las agregamos a
 	// listaUrlsVisitadas
 	public void cargarUrlsDesdeArchivo() {
+		if (!archivoUrl.exists()) {
+			try {
+				archivoUrl.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 		try (BufferedReader br = new BufferedReader(new FileReader(archivoUrl))) {
 			String linea;
 
@@ -53,7 +60,7 @@ public class GestionURL {
 		}
 	}
 
-	// Creams un método para agragar la URL al fichero que hemos creado
+	// Creamos un método para agragar la URL al fichero que hemos creado
 	public void guardarUrlsEnArchivo() {
 		try (BufferedWriter bw = new BufferedWriter(new FileWriter(archivoUrl, true))) {
 
@@ -90,5 +97,7 @@ public class GestionURL {
 		}
 		return false; // La URL no está en el fichero
 	}
+	
+	
 
 }

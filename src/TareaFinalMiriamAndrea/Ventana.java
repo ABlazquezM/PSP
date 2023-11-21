@@ -6,6 +6,7 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.regex.Pattern;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -13,7 +14,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 
@@ -49,7 +52,7 @@ public class Ventana extends JFrame implements ActionListener {
 		gestion.cargarUrlsDesdeArchivo();
 
 		inicializarComponentes();
-		// Setemos el textPane con la URLs
+		// Seteamos el textPane con la URLs
 		for (String url : gestion.listaUrlsVisitadas) {
 			textPane.setText(textPane.getText() + url + "\n");
 		}
@@ -124,6 +127,10 @@ public class Ventana extends JFrame implements ActionListener {
 		lupa.setIcon(imageIcon4);
 		lupa.setBounds(295, 184, 20, 20);
 		contentPane.add(lupa);
+		
+		
+		
+		
 	}
 
 	@Override
@@ -147,7 +154,7 @@ public class Ventana extends JFrame implements ActionListener {
 		}
 
 		if (e.getSource() == postman) {
-			ProcessBuilder pb = new ProcessBuilder("C:\\Users\\gupya\\AppData\\Local\\Postman\\Postman.exe");
+			ProcessBuilder pb = new ProcessBuilder("C:\\ProgramData\\AndreaBlazquezMartin\\Postman\\Postman.exe");
 
 			try {
 				pb.start();
@@ -159,7 +166,7 @@ public class Ventana extends JFrame implements ActionListener {
 
 		if (e.getSource() == visualStudio) {
 			ProcessBuilder pb = new ProcessBuilder(
-					"C:\\Users\\gupya\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe");
+					"C:\\Users\\AndreaBlazquezMartin\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe");
 
 			try {
 				pb.start();
@@ -173,14 +180,20 @@ public class Ventana extends JFrame implements ActionListener {
 			// Código para navegar a la URL especificada por el usuario
 			String url = textField.getText().trim();
 			if (!url.isEmpty()) {
-				gestion.abrirNavegadorConUrl(url);
-				textField.setText("");
-				textPane.setText("");
-				gestion.guardarUrlsEnArchivo();
+				if (Pattern.matches("^(http|https)?://[a-zA-Z0-9-.]+\\.[a-zA-Z]{2,6}(?::\\d{1,5})?$", url)) {
+					gestion.abrirNavegadorConUrl(url);
+					textField.setText("");
+					textPane.setText("");
+					gestion.guardarUrlsEnArchivo();
 
-				for (String storedUrl : gestion.listaUrlsVisitadas) {
-					textPane.setText(textPane.getText() + storedUrl + "\n");
+					for (String storedUrl : gestion.listaUrlsVisitadas) {
+						textPane.setText(textPane.getText() + storedUrl + "\n");
+					}
+				} else {
+					JOptionPane.showMessageDialog(null,"Debes introducir una URL válida");
+					textField.setText("");
 				}
+				
 			}
 
 		}
@@ -210,6 +223,7 @@ public class Ventana extends JFrame implements ActionListener {
 
 			// Abrimos la URL en el navegador
 			gestion.abrirNavegadorConUrl(urlClicada);
+			textField.setText(urlClicada);
 		}
 	}
 
@@ -235,5 +249,4 @@ public class Ventana extends JFrame implements ActionListener {
 		}
 		return pos;
 	}
-
 }
