@@ -199,8 +199,8 @@ public class Ventana extends JFrame implements ActionListener {
 		String contenido = textPane.getText();
 
 		// Encontramos el inicio y fin de la url en la que se hizo clic
-		int inicio = findWordStart(contenido, offset);
-		int fin = findWordEnd(contenido, offset);
+		int inicio = inicio(contenido, offset);
+		int fin = fin(contenido, offset);
 
 		// Verificamos si se encontró una url (inicio y fin no son -1)
 		if (inicio != -1 && fin != -1) {
@@ -214,7 +214,7 @@ public class Ventana extends JFrame implements ActionListener {
 	}
 
 	// Creamos un método para encontrar el inicio de laURL en la posición dada
-	private int findWordStart(String text, int pos) {
+	private int inicio(String text, int pos) {
 
 		// Nos movemos hacia atrás hasta encontrar un espacio en blanco o el inicio del
 		// texto
@@ -225,7 +225,7 @@ public class Ventana extends JFrame implements ActionListener {
 	}
 
 	// Cremos un método para encontrar el final de laURL
-	private int findWordEnd(String text, int pos) {
+	private int fin(String text, int pos) {
 		int length = text.length();
 
 		// Nos movemos hacia adelante hasta encontrar un espacio en blanco o el final
